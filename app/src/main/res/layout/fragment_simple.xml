@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/valium_et_min_length_1_label"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Min Length validator" />
+
+        <EditText
+            android:id="@+id/valium_et_min_length_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min length"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Min length validator with custom logic" />
+
+        <EditText
+            android:id="@+id/valium_et_min_length_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min length"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Min length validator from builder" />
+
+        <EditText
+            android:id="@+id/valium_et_min_length_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min length"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chained validator" />
+
+        <EditText
+            android:id="@+id/valium_et_chained_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Not blank, not longer than 10"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chained validator from builder" />
+
+        <EditText
+            android:id="@+id/valium_et_chained_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Not blank, not longer than 10"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custom validator" />
+
+        <EditText
+            android:id="@+id/valium_et_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Starts with http://"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+    </LinearLayout>
+</ScrollView>

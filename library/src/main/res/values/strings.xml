@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">library</string>
+    <string name="validation_error_too_short">input must be at least %1$d signs</string>
+    <string name="validation_error_too_long">input must be not more than %1$d signs</string>
+    <string name="validation_error_wrong_length">input must be exact %1$d signs</string>
+    <string name="validation_error_is_blank">input required</string>
+    <string name="validation_error_not_in_range">input must be between %1$d and %2$d signs</string>
+    <string name="validation_error_regex">input does not match the requirements</string>
+    <string name="validation_error_invalid_characters">input contains forbidden characters (%1$s)</string>
+    <string name="validation_error_starts_with">input must not start with (%1$s)</string>
+    <string name="validation_error_ends_with">input must not end with (%1$s)</string>
+    <string name="validation_error_contains">input must not contain (%1$s)</string>
+    <string name="validation_error_email">this does not look like a valid email</string>
+</resources>

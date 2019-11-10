@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.grafsemmel.valium.sample.ui.databinding.DatabindingViewModel" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/valium_et_min_length_1_label"
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min Length validator" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Min length"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:text="@={viewmodel.minLengthValidator.text}"
+                app:error="@{viewmodel.minLengthValidator.error}" />
+
+            <TextView
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chained validator" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Not empty, not longer than 10"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:text="@={viewmodel.chainedValidator.text}"
+                app:error="@{viewmodel.chainedValidator.error}" />
+
+            <TextView
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Custom validator" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Starts with http://"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:text="@={viewmodel.customValidator.text}"
+                app:error="@{viewmodel.customValidator.error}" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

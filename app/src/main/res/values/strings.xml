@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Valium</string>
+    <string name="title_form">Form</string>
+    <string name="title_simple">Simple</string>
+    <string name="title_databinding">ViewModel</string>
+    <string name="validation_error_http">input must start with http://</string>
+</resources>
