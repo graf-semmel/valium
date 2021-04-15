@@ -1,10 +1,9 @@
-name: Feature/Bugfix
+name: Master
 
 on:
   push:
     branches:
-      - 'feature/**'
-      - 'bugfix/**'
+      - 'master'
 
 jobs:
   build:
@@ -16,6 +15,4 @@ jobs:
         with:
           java-version: 1.8
       - name: build and test
-        env:
-          VERSION_CODE: ${{ github.run_number }}
-        run: ./gradlew clean testDebug assembleDebug
+        run: ./gradlew clean testRelease assembleRelease
