@@ -17,7 +17,7 @@ class ContactDetailsFragmentTest {
 
     @Before
     fun setup() {
-        scenario = launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents)
+        scenario = launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_Light)
     }
 
     @Test
@@ -48,7 +48,6 @@ class ContactDetailsFragmentTest {
     @Test
     fun formShowsDifferentErrorMessages() {
         onContactDetailsForm {
-            sleep(2f)
             setFirstNameToShort()
             setFirstName()
             setLastName()

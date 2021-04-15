@@ -13,37 +13,30 @@ class ContactDetailsFragmentRobot : BaseRobot() {
 
     fun setFirstName() {
         fillEditText(R.id.et_first_name, "First")
-        sleep(1f)
     }
 
     fun setFirstNameToShort() {
         fillEditText(R.id.et_first_name, "F")
-        sleep(1f)
     }
 
     fun setLastName() {
         fillEditText(R.id.et_last_name, "Last")
-        sleep(1f)
     }
 
     fun setEmail() {
         fillEditText(R.id.et_email, "first.last@gmail.com")
-        sleep(1f)
     }
 
     fun setWrongEmail() {
         fillEditText(R.id.et_email, "first.last")
-        sleep(1f)
     }
 
     fun submitButtonShouldBeDisabled() {
         submitButton.check(matches(not(isEnabled())))
-        sleep(1f)
     }
 
     fun submitButtonShouldBeEnabled() {
         submitButton.check(matches(isEnabled()))
-        sleep(1f)
     }
 }
 
