@@ -27,7 +27,7 @@ class AlphanumericValidatorsTest {
     fun nonAlphaNumericCharactersShouldNotBeValid() {
         alphaNumericValidator.run {
             listOf("à", "á", "â", "ä", "æ", "ã", "å", "ā").onEach {
-                assertThat(validate(it), `is`(false))
+                assertThat("testing $it", validate(it), `is`(false))
             }
         }
     }
