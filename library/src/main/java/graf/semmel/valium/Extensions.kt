@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.lifecycle.MutableLiveData
 
 fun EditText.addTextChangedListener(afterTextChanged: (s: String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -21,10 +20,6 @@ fun EditText.addTextChangedListener(afterTextChanged: (s: String) -> Unit) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         }
     })
-}
-
-fun <T> MutableLiveData<T>.setIfDistinct(newValue: T) {
-    if (value != newValue) value = newValue
 }
 
 /**

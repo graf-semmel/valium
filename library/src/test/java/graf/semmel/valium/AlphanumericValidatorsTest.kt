@@ -1,4 +1,4 @@
-package com.grafsemmel.valium
+package graf.semmel.valium
 
 import graf.semmel.valium.validator.Validators
 import org.hamcrest.MatcherAssert.assertThat
