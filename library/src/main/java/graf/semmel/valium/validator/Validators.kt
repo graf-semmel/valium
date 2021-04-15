@@ -2,6 +2,7 @@ package graf.semmel.valium.validator
 
 import android.telephony.PhoneNumberUtils
 import android.util.Patterns
+import androidx.core.util.PatternsCompat
 
 object Validators {
     class NotBlankValidator : Validator {
@@ -74,8 +75,9 @@ object Validators {
         override fun validate(value: String) = regex.toPattern().matcher(value).matches()
     }
 
-    class EmailValidator : RegexValidator(Patterns.EMAIL_ADDRESS.toRegex())
-    class AlphaNumericValidator : RegexValidator("[ 0-9\\p{L}]*".toRegex())
+    class EmailValidator : RegexValidator(PatternsCompat.EMAIL_ADDRESS.toRegex())
+
+    class AlphaNumericValidator : Validators.RegexValidator("[ 0-9a-zA-Z/.\\-_‘,]+".toRegex())
 
     class PhoneNumberValidator : Validator {
         override fun validate(value: String) = PhoneNumberUtils.isGlobalPhoneNumber(value)

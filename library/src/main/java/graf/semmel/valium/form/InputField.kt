@@ -20,7 +20,7 @@ class InputField(val id: Int) {
     private lateinit var errorView: ErrorView
     private var validateIf: (text: String) -> Boolean = { true }
     private val rules: Rules = Rules()
-    private var validationResult: ValidationResult by Delegates.observable(NotValid(R.string.validation_error_generic)) { property, oldValue, newValue ->
+    private var validationResult: ValidationResult by Delegates.observable(NotValid(R.string.validation_error_generic)) { _, oldValue, newValue ->
         Log.d("DEBUG", "InputField isValid changed: $validationResult.isValid()")
         if (oldValue.isValid() != newValue.isValid()) onValidationChanged(isValid)
         updateError()

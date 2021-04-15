@@ -11,7 +11,7 @@ class Form {
     private var submitButton: SubmitButton? = null
     private val inputFields = mutableListOf<InputField>()
     private var onValidationChanged: (isValid: Boolean) -> Unit = {}
-    private var isValid by Delegates.observable(true) { property, oldValue, newValue ->
+    private var isValid by Delegates.observable(true) { _, oldValue, newValue ->
         Log.d("DEBUG", "Form isValid changed: $newValue")
         submitButton?.enable(newValue)
         if (oldValue != newValue) onValidationChanged(newValue)

@@ -110,9 +110,6 @@ class Rules {
     fun addRule(rule: Rule) = rules.add(rule)
 }
 
-fun Rules.isEmail(@StringRes errorStringRes: Int = R.string.validation_error_email) =
-    this.addRule(Validators.EmailValidator().asValidatorRule(errorStringRes))
-
 open class ValidatorRule(
     private val validator: Validator,
     private val errorStringRes: Int,
