@@ -1,0 +1,20 @@
+<resources>
+    <string name="validation_error_no_number">This does not look like a number</string>
+    <string name="validation_error_no_supported_card">This card type is not supported</string>
+    <string name="validation_error_no_valid_card">This card is not a valid card</string>
+    <string name="validation_error_card_expired">This card is expired</string>
+    <string name="validation_error_generic">This does not look right</string>
+    <string name="validation_error_no_number_allowed">No numbers allowed</string>
+    <string name="validation_error_too_short">Input must be at least %1$d signs</string>
+    <string name="validation_error_too_long">Input must be not more than %1$d signs</string>
+    <string name="validation_error_wrong_length">Input must be exact %1$d signs</string>
+    <string name="validation_error_is_blank">Input required</string>
+    <string name="validation_error_not_in_range">Input must be between %1$d and %2$d signs</string>
+    <string name="validation_error_regex">Input does not match the requirements</string>
+    <string name="validation_error_invalid_characters">Input contains forbidden characters (%1$s)</string>
+    <string name="validation_error_starts_with">Input must not start with (%1$s)</string>
+    <string name="validation_error_ends_with">Input must not end with (%1$s)</string>
+    <string name="validation_error_contains">Input must not contain (%1$s)</string>
+    <string name="validation_error_email">This does not look like a valid email</string>
+    <string name="validation_error_alphanumeric">Input contains forbidden characters.</string>
+</resources>
