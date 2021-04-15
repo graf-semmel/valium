@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 30
@@ -34,25 +35,25 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+}
 
-    afterEvaluate {
-        publishing {
-            publications {
-                release(MavenPublication) {
-                    from components.release
-                    groupId = "graf.semmel"
-                    artifactId = "valium"
-                    version = "0.3-SNAPSHOT-" + System.getenv("VERSION_CODE")
-                }
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "graf.semmel"
+                artifactId = "valium"
+                version = "0.3-SNAPSHOT-" + System.getenv("VERSION_CODE")
             }
-            repositories {
-                maven {
-                    url "https://maven.pkg.github.com/graf-semmel/valium"
-                    name "GitLab"
-                    credentials {
-                        username = System.getenv("GITHUB_ACTOR")
-                        password = System.getenv("GITHUB_TOKEN")
-                    }
+        }
+        repositories {
+            maven {
+                url "https://maven.pkg.github.com/graf-semmel/valium"
+                name "GitLab"
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
                 }
             }
         }
