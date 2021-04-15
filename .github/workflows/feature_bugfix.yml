@@ -19,7 +19,3 @@ jobs:
         env:
           VERSION_CODE: ${{ github.run_number }}
         run: ./gradlew clean testDebug assembleDebug
-      - name: publish package
-        run: gradle publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
