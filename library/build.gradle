@@ -42,7 +42,7 @@ android {
                     from components.release
                     groupId = "graf.semmel"
                     artifactId = "valium"
-                    version = "0.3-SNAPSHOT"
+                    version = "0.3-SNAPSHOT-" + System.getenv("VERSION_CODE")
                 }
             }
             repositories {

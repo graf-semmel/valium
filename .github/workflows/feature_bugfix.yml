@@ -19,10 +19,6 @@ jobs:
         env:
           VERSION_CODE: ${{ github.run_number }}
         run: ./gradlew clean testDebug assembleDebug
-      - name: build and test
-          env:
-            VERSION_CODE: ${{ github.run_number }}
-          run: ./gradlew clean testDebug assembleDebug
       - name: publish package
         run: gradle publish
         env:
