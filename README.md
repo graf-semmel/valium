@@ -1,5 +1,7 @@
+![master branch batch](https://github.com/graf-semmel/valium/actions/workflows/master.yml/badge.svg)
+
 # Valium
-Android ibrary to validate forms
+Android library to validate forms
 
 ## Download
 
