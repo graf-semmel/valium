@@ -1,5 +1,5 @@
 # Valium
-Android ibrary to validate forms.
+Android ibrary to validate forms
 
 ## Download
 
@@ -36,7 +36,7 @@ val form = form {
 ```
 <img width="500" alt="portfolio_view" src="form-validation.gif">
 
-### Mark Fields As Optional
+### Mark fields as optional
 
 ```kotlin
 rules {
@@ -44,28 +44,28 @@ rules {
 }
 ```
 
-### Custom Error Message
+### Custom error message
 
 ```kotlin
 rules {
-		notBlank(R.string.my_not_blank)
-  	min(3, R.string.my_too_short)
+    notBlank(R.string.my_not_blank)
+    min(3, R.string.my_too_short)
 }
 ```
 
-### Extend Validation Rules
+### Extend validationruless
 
 ```kotlin
-// extends interface Rule or class ValidatorRule if you want to use Validators
+// extend Rule interface or ValidatorRule class if you want to use Validators
 class EmailRule(@StringRes errorStringRes: Int = R.string.validation_error_email) : ValidatorRule(
     Validators.EmailValidator(),
     errorStringRes
 )
 
-// extends Rules class
+// extend Rules class
 fun Rules.isEmail(@StringRes errorStringRes: Int = R.string.validation_error_email) = this.addRule(EmailRule())
 
-// use in input field definition
+// add to rules
 inputField(R.id.et_email) {
     rules {
         isEmail()
@@ -73,7 +73,7 @@ inputField(R.id.et_email) {
 }
 ```
 
-### Custom Validators
+### Custom validators
 
 Validators will be implemented by extending the `Validator` interface
 ```kotlin
@@ -81,7 +81,7 @@ interface Validator {
     fun validate(value: String): Boolean
 }
 ```
-### Default Validators
+### Default validators
 Common validators are provided under the `Validators` class
 ```kotlin
 object Validators {
@@ -97,7 +97,8 @@ object Validators {
 ```
 
 ## TODO
-* publish to maven
-* optional parameter
-* SpinnerField docs
-* prevent validation on typing docs
+* publish package
+* spinner field
+* checkbox
+* more rules
+* validation under condition
