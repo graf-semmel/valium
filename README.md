@@ -1,11 +1,26 @@
 ![master branch batch](https://github.com/graf-semmel/valium/actions/workflows/master.yml/badge.svg)
+[![](https://jitpack.io/v/graf-semmel/valium.svg)](https://jitpack.io/#graf-semmel/valium)
 
 # Valium
 Android library to validate forms
 
 ## Download
 
-TODO
+```groovy
+// build.gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+// app/build.gradle
+dependencies {
+  	...
+    implementation 'com.github.graf-semmel:valium:0.2'
+}
+```
 
 ## Example
 
