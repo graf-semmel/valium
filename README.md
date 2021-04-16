@@ -41,7 +41,7 @@ val form = form {
 ### Mark fields as optional
 
 ```kotlin
-rules {
+inputField {
     required = false
 }
 ```
@@ -55,7 +55,7 @@ rules {
 }
 ```
 
-### Extend validationruless
+### Extend validation rules
 
 ```kotlin
 // extend Rule interface or ValidatorRule class if you want to use Validators
