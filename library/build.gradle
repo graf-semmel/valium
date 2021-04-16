@@ -44,17 +44,7 @@ afterEvaluate {
                 from components.release
                 groupId = "graf.semmel"
                 artifactId = "valium"
-                version = "0.3-SNAPSHOT-" + System.getenv("VERSION_CODE")
-            }
-        }
-        repositories {
-            maven {
-                url "https://maven.pkg.github.com/graf-semmel/valium"
-                name "GitLab"
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
+                version = "0.2"
             }
         }
     }
