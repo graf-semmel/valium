@@ -18,7 +18,7 @@ allprojects {
 // app/build.gradle
 dependencies {
   	...
-    implementation 'com.github.graf-semmel:valium:0.2'
+    implementation 'com.github.graf-semmel:valium:0.3'
 }
 ```
 
