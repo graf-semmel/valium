@@ -39,7 +39,7 @@ class FormFragmentTest {
     fun formIsInvalidWhenInputIsTooShort() {
         formFragmentRobot {
             setInput1Valid()
-            setInput2TooShort()
+            setInput2Valid()
             setInput3TooShort()
             submitButtonShouldBeDisabled()
         }

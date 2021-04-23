@@ -10,12 +10,12 @@ import graf.semmel.valium.validator.Validators
 
 class Rules {
 
-    val rules = mutableSetOf<Rule>()
+    private val rules = mutableSetOf<Rule>()
 
     fun min(
         length: Int,
         @StringRes errorStringRes: Int = R.string.validation_error_too_short
-    ) = addRule(
+    ) = registerRule(
         Validators.MinLengthValidator(length).asValidatorRule(
             errorStringRes,
             length
@@ -25,7 +25,7 @@ class Rules {
     fun max(
         length: Int,
         @StringRes errorStringRes: Int = R.string.validation_error_too_long
-    ) = addRule(
+    ) = registerRule(
         Validators.MaxLengthValidator(length).asValidatorRule(
             errorStringRes,
             length
@@ -35,7 +35,7 @@ class Rules {
     fun length(
         length: Int,
         @StringRes errorStringRes: Int = R.string.validation_error_wrong_length
-    ) = addRule(
+    ) = registerRule(
         Validators.LengthValidator(length).asValidatorRule(
             errorStringRes,
             length
@@ -55,14 +55,14 @@ class Rules {
 
     fun notBlank(
         @StringRes errorStringRes: Int = R.string.validation_error_is_blank
-    ) = addRule(Validators.NotBlankValidator().asValidatorRule(errorStringRes))
+    ) = registerRule(Validators.NotBlankValidator().asValidatorRule(errorStringRes))
 
     fun startsWith(
         vararg strings: String,
         ignoreCase: Boolean = true,
         mustNot: Boolean = false,
         @StringRes errorStringRes: Int = R.string.validation_error_starts_with
-    ) = addRule(
+    ) = registerRule(
         Validators.StartsWithValidator(
             *strings,
             ignoreCase = ignoreCase,
@@ -78,7 +78,7 @@ class Rules {
         ignoreCase: Boolean = true,
         mustNot: Boolean = false,
         @StringRes errorStringRes: Int = R.string.validation_error_ends_with
-    ) = addRule(
+    ) = registerRule(
         Validators.EndsWithValidator(*strings, ignoreCase = ignoreCase, mustNot = mustNot).asValidatorRule(
             errorStringRes,
             strings.joinToString(separator = "", prefix = "\"", postfix = "\"")
@@ -90,7 +90,7 @@ class Rules {
         ignoreCase: Boolean = true,
         mustNot: Boolean = false,
         @StringRes errorStringRes: Int = R.string.validation_error_contains
-    ) = addRule(
+    ) = registerRule(
         Validators.ContainsValidator(*strings, ignoreCase = ignoreCase, mustNot = mustNot).asValidatorRule(
             errorStringRes,
             strings.joinToString(separator = "", prefix = "\"", postfix = "\"")
@@ -99,15 +99,17 @@ class Rules {
 
     fun isEmail(
         @StringRes errorStringRes: Int = R.string.validation_error_email
-    ) = addRule(Validators.EmailValidator().asValidatorRule(errorStringRes))
+    ) = registerRule(Validators.EmailValidator().asValidatorRule(errorStringRes))
 
     fun regex(
         regex: Regex,
         @StringRes errorStringRes: Int = R.string.validation_error_regex,
         params: Any
-    ) = addRule(Validators.RegexValidator(regex).asValidatorRule(errorStringRes, params))
+    ) = registerRule(Validators.RegexValidator(regex).asValidatorRule(errorStringRes, params))
 
-    fun addRule(rule: Rule) = rules.add(rule)
+    fun registerRule(rule: Rule) = rules.add(rule)
+
+    fun validate(text: String): ValidationResult = rules.map { it.validate(text) }.find { it is NotValid } ?: Valid
 }
 
 open class ValidatorRule(
@@ -121,12 +123,6 @@ open class ValidatorRule(
         false -> NotValid(errorStringRes, *errorStringArgs)
     }
 }
-
-class EmailRule(@StringRes errorStringRes: Int = R.string.validation_error_email) : ValidatorRule(
-    Validators.EmailValidator(),
-    errorStringRes
-)
-
 
 fun Validator.asValidatorRule(
     errorStringRes: Int,

@@ -23,11 +23,6 @@ class FormFragmentRobot : BaseRobot() {
         fillEditText(R.id.et_3, "123")
     }
 
-
-    fun setInput2TooShort() {
-        fillEditText(R.id.et_2, "12")
-    }
-
     fun setInput3TooShort() {
         fillEditText(R.id.et_3, "12")
     }

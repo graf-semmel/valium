@@ -2,12 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_1"
+        android:id="@+id/etl_1_show_errors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,13 +15,13 @@
         android:minHeight="72dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_1"
+            android:id="@+id/et_1_show_errors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_2"
+        android:id="@+id/etl_2_show_errors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -31,21 +30,40 @@
         android:minHeight="72dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_2"
+            android:id="@+id/et_2_show_errors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/et_3"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etl_3_show_errors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="16dp"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:minHeight="72dp" />
+        android:minHeight="72dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_3_show_errors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etl_4_show_errors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="16dp"
+        android:minHeight="72dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_4_show_errors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_submit"

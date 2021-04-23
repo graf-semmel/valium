@@ -1,7 +1,6 @@
 package graf.semmel.valium.validator
 
 import android.telephony.PhoneNumberUtils
-import android.util.Patterns
 import androidx.core.util.PatternsCompat
 
 object Validators {
@@ -79,6 +78,7 @@ object Validators {
 
     class AlphaNumericValidator : Validators.RegexValidator("[ 0-9a-zA-Z/.\\-_‘,]+".toRegex())
 
+    // TODO extend Rules class and write tests
     class PhoneNumberValidator : Validator {
         override fun validate(value: String) = PhoneNumberUtils.isGlobalPhoneNumber(value)
     }

@@ -4,7 +4,7 @@ import android.view.KeyEvent
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
@@ -22,24 +22,31 @@ open class BaseRobot {
     fun isChecked(resId: Int): ViewInteraction =
         onView(withId(resId)).check(matches(isChecked()))
 
+    fun ViewInteraction.clickView(): ViewInteraction = this.perform(click())
+
+    fun ViewInteraction.fillEditText(text: String): ViewInteraction = this.perform(
+        replaceText(text),
+    ).also { sleep(WAIT_AFTER_REPLACING_TEXT) }
+
+
     fun fillEditText(resId: Int, text: String): ViewInteraction =
         onView(withId(resId)).perform(
-            ViewActions.replaceText(text),
+            replaceText(text),
         ).also { sleep(WAIT_AFTER_REPLACING_TEXT) }
 
     fun typeEditText(resId: Int, char: Char): ViewInteraction =
         onView(withId(resId)).perform(
-            ViewActions.typeText(char.toString()),
+            typeText(char.toString()),
         )
 
     fun backSpaceEditText(resId: Int): ViewInteraction =
         onView(withId(resId)).perform(
-            ViewActions.click(),
-            ViewActions.pressKey(KeyEvent.KEYCODE_DEL),
+            click(),
+            pressKey(KeyEvent.KEYCODE_DEL),
         )
 
     fun clickView(resId: Int): ViewInteraction =
-        onView((withId(resId))).perform(ViewActions.click())
+        onView((withId(resId))).perform(click())
 
     fun textView(resId: Int): ViewInteraction = onView(withId(resId))
 
@@ -76,8 +83,14 @@ open class BaseRobot {
         Espresso.closeSoftKeyboard()
     }
 
-    fun hasTextInputLayoutErrorText(textInputLayoutId: Int, errorStringResId: Int) {
-        onView(withId(textInputLayoutId)).check(matches(hasTextInputLayoutErrorText(errorStringResId)))
-    }
+    fun ViewInteraction.hasErrorText(errorString: String): ViewInteraction =
+        this.check(matches(hasTextInputLayoutErrorText(errorString)))
+
+    fun ViewInteraction.hasErrorTextRes(errorStringResId: Int): ViewInteraction =
+        this.check(matches(hasTextInputLayoutErrorText(errorStringResId)))
+
+    fun ViewInteraction.hasNoError(): ViewInteraction =
+        this.check(matches(hasNoTextInputLayoutErrorText()))
+
 }
 
