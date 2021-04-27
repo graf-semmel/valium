@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.view.children
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import com.grafsemmel.valium.R
-import graf.semmel.valium.addTextChangedListener
 import graf.semmel.valium.validator.ValidationResult
 import graf.semmel.valium.validator.ValidationResult.NotValid
 import graf.semmel.valium.validator.ValidationResult.Valid
@@ -15,53 +15,56 @@ import graf.semmel.valium.validator.isValid
 import kotlin.properties.Delegates
 
 class InputField(val id: Int) {
-
+    private var firstFocus = true
     private lateinit var editText: EditText
     private lateinit var errorView: ErrorView
-    private var validateIf: (text: String) -> Boolean = { true }
     private val rules: Rules = Rules()
+    private var showErrors: ShowErrors? = null
     private var validationResult: ValidationResult by Delegates.observable(NotValid(R.string.validation_error_generic)) { _, oldValue, newValue ->
-        Log.d("DEBUG", "InputField isValid changed: $validationResult.isValid()")
+        Log.d("DEBUG", "InputField isValid changed: $validationResult")
         if (oldValue.isValid() != newValue.isValid()) onValidationChanged(isValid)
-        updateError()
     }
-    val isValid get() = validationResult.isValid()
+
+    val text: String get() = editText.text.toString()
+
+    val isValid: Boolean get() = validationResult.isValid()
+
     var onValidationChanged: (isValid: Boolean) -> Unit = {}
+
     var required: Boolean = true
 
-    fun validateIf(predicate: (text: String) -> Boolean) {
-        validateIf = predicate
-    }
-
     fun validate() {
-        val text = editText.text.toString()
         Log.d("DEBUG", "InputField validate $text")
-        validationResult = if (!required && text.isBlank()) {
-            Valid
-        } else {
-            rules.rules.map { it.validate(text) }.find { it is NotValid } ?: Valid
-        }
+        validationResult = if (!required && text.isBlank()) Valid else rules.validate(text)
     }
 
     private fun updateError() {
-        validationResult.let { result ->
-            errorView.showError(
-                when (result) {
-                    is NotValid -> editText.context.getString(result.errorStringRes, *result.placeholders)
-                    is Valid -> null
-                }
-            )
+        val hasLostFocus = !editText.hasFocus()
+        if (firstFocus && hasLostFocus) firstFocus = false
+        showError(showErrors?.shouldShow(hasLostFocus, firstFocus) ?: false)
+    }
+
+    fun showError(visible: Boolean = false) = with(validationResult) {
+        when (this) {
+            is Valid -> errorView.hideError()
+            is NotValid -> if (visible) {
+                val error = editText.context.getString(errorStringRes, *placeholders)
+                errorView.showError(error)
+            } else {
+                errorView.hideError()
+            }
         }
     }
 
-    fun bindView(view: View) {
+    fun setupView(view: View, showErrors: ShowErrors) {
+        Log.d("DEBUG", "InputField bindView")
+        this.showErrors = this.showErrors ?: showErrors
         when (view) {
             is EditText -> {
                 this.editText = view
-                this.errorView =
-                    view.findTextInputLayoutParent()?.let { ErrorView.TextInputLayout(it) } ?: ErrorView.EditText(
-                        editText
-                    )
+                this.errorView = view.findTextInputLayoutParent()
+                    ?.let { ErrorView.TextInputLayout(it) }
+                    ?: ErrorView.EditText(editText)
             }
             is TextInputLayout -> {
                 this.editText = view.findFirstEditTextChild()
@@ -70,27 +73,46 @@ class InputField(val id: Int) {
             }
             else -> throw IllegalArgumentException("Only EditText and TextInputLayout are allowed as view for an InputField.")
         }
-        editText.apply { addTextChangedListener { validate() } }
-        Log.d("DEBUG", "InputField resolveView")
+        editText.doAfterTextChanged {
+            validate()
+            updateError()
+        }
+        editText.setOnFocusChangeListener { _, _ ->
+            validate()
+            updateError()
+        }
     }
 
     fun rules(config: Rules.() -> Unit) = rules.apply(config)
 
+    fun showErrors(config: ShowErrors.() -> Unit) {
+        this.showErrors = ShowErrors().apply(config)
+    }
+
     sealed class ErrorView {
 
-        abstract fun showError(error: String?)
+        abstract fun showError(error: String)
+        abstract fun hideError()
 
-        class EditText(val view: android.widget.EditText) : ErrorView() {
+        class EditText(private val view: android.widget.EditText) : ErrorView() {
 
-            override fun showError(error: String?) {
+            override fun showError(error: String) {
                 view.error = error
+            }
+
+            override fun hideError() {
+                view.error = null
             }
         }
 
-        class TextInputLayout(val view: com.google.android.material.textfield.TextInputLayout) : ErrorView() {
+        class TextInputLayout(private val view: com.google.android.material.textfield.TextInputLayout) : ErrorView() {
 
-            override fun showError(error: String?) {
+            override fun showError(error: String) {
                 view.error = error
+            }
+
+            override fun hideError() {
+                view.error = null
             }
         }
     }

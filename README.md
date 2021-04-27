@@ -17,8 +17,8 @@ allprojects {
 
 // app/build.gradle
 dependencies {
-  	...
-    implementation 'com.github.graf-semmel:valium:0.3'
+    ...
+    implementation 'com.github.graf-semmel:valium:0.4'
 }
 ```
 
@@ -79,8 +79,8 @@ class EmailRule(@StringRes errorStringRes: Int = R.string.validation_error_email
     errorStringRes
 )
 
-// extend Rules class
-fun Rules.isEmail(@StringRes errorStringRes: Int = R.string.validation_error_email) = this.addRule(EmailRule())
+// extend Rules class and register new rule
+fun Rules.isEmail(@StringRes errorStringRes: Int = R.string.validation_error_email) = registerRule(EmailRule())
 
 // add to rules
 inputField(R.id.et_email) {
@@ -98,8 +98,11 @@ interface Validator {
     fun validate(value: String): Boolean
 }
 ```
+
 ### Default validators
+
 Common validators are provided under the `Validators` class
+
 ```kotlin
 object Validators {
     class NotBlankValidator : Validator {
@@ -109,13 +112,39 @@ object Validators {
     class MaxLengthValidator(private val max: Int) : Validator {
         override fun validate(value: String) = isNotNegative(max) && value.length <= max
     }
-		...
+    ...
+}
+```
+
+### Change error displaying strategy
+
+If you want to change the events that triggers the displaying of errors, overwrite the settings of the `showErrors` attribute. By default the errors will be shown when the user leaves the field he typed into. While typing their will be no error displayed when it is the first edit for a field.
+
+If the form is linked to a submit button, any click on the submit button will trigger form validation and causes the displaying of potential errors. The possible settings are shown in the example below.
+
+```kotlin
+form {
+    inputField(R.id.et_1_show_errors) {
+        rules {
+            notBlank()
+            min(3)
+        }
+        showErrors { // will overwrite global validation strategy for a single field
+            onFirstEdit = false
+            onSubsequentEdit = true
+            onLeaveField = true
+        }
+    }
+    showErrors { // global validation strategy for a form
+        onFirstEdit = false // when user types into field the very first time
+        onSubsequentEdit = true // when user left the field and comes back to change its input
+        onLeaveField = true // when user clicks into the next field
+    }
 }
 ```
 
 ## TODO
-* publish package
 * spinner field
 * checkbox
 * more rules
-* validation under condition
+* move package to Maven Central

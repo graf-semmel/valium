@@ -112,3 +112,18 @@ fun hasTextInputLayoutErrorText(@StringRes expectedErrorTextRes: Int): Matcher<V
         }
     }
 }
+
+fun hasNoTextInputLayoutErrorText(): Matcher<View> {
+
+    return object : TypeSafeMatcher<View>() {
+
+        override fun matchesSafely(view: View?): Boolean {
+            if (view !is TextInputLayout) return false
+            return view.error == null
+        }
+
+        override fun describeTo(description: Description?) {
+            description?.appendText("expected error should be null")
+        }
+    }
+}

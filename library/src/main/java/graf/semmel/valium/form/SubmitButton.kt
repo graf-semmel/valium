@@ -5,15 +5,17 @@ import android.view.View
 
 class SubmitButton(val id: Int) {
 
-    var buttonView: View? = null
+    var disableOnError: Boolean = true
+    private var buttonView: View? = null
 
     fun enable(isEnabled: Boolean) {
         Log.d("DEBUG", "SubmitButton enable: $isEnabled")
-        buttonView?.isEnabled = isEnabled
+        if (disableOnError) buttonView?.isEnabled = isEnabled
     }
 
-    fun bindView(view: View) {
+    fun setupView(view: View) {
         Log.d("DEBUG", "SubmitButton resolveView")
         buttonView = view
+        view.isEnabled = true
     }
 }

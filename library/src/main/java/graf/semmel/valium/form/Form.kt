@@ -11,14 +11,27 @@ class Form {
     private var submitButton: SubmitButton? = null
     private val inputFields = mutableListOf<InputField>()
     private var onValidationChanged: (isValid: Boolean) -> Unit = {}
-    private var isValid by Delegates.observable(true) { _, oldValue, newValue ->
+    private val showErrors: ShowErrors = ShowErrors()
+
+    var isValid by Delegates.observable(true) { _, oldValue, newValue ->
         Log.d("DEBUG", "Form isValid changed: $newValue")
         submitButton?.enable(newValue)
         if (oldValue != newValue) onValidationChanged(newValue)
     }
+        private set
 
     fun onValidationChange(listener: (isValid: Boolean) -> Unit = {}) {
         onValidationChanged = listener
+    }
+
+    fun validate() {
+        Log.d("DEBUG", "Form validateAllInputFields")
+        isValid = inputFields.onEach { it.validate() }.all { it.isValid }
+    }
+
+    private fun showErrors() {
+        Log.d("DEBUG", "Form showErrors")
+        inputFields.onEach { it.showError(true) }
     }
 
     fun inputField(id: Int, config: InputField.() -> Unit) {
@@ -31,31 +44,44 @@ class Form {
             }
     }
 
-    fun submitButton(id: Int) {
+    fun submitButton(id: Int, config: SubmitButton.() -> Unit = {}) {
         Log.d("DEBUG", "Form withSubmitButton")
-        submitButton = SubmitButton(id)
+        submitButton = SubmitButton(id).apply { config() }
     }
 
-    fun validate() {
-        Log.d("DEBUG", "Form validateAllInputFields")
-        isValid = inputFields.onEach { it.validate() }.all { it.isValid }
-    }
+    fun showErrors(config: ShowErrors.() -> Unit) = showErrors.apply(config)
 
-    fun initViews(rootView: View) {
+    fun setupViews(rootView: View) {
         Log.d("DEBUG", "Form initViews")
-        inputFields.onEach { it.bindView(rootView.findViewById(it.id)) }
-        submitButton?.apply { bindView(rootView.findViewById(id)) }
+        setupInputFields(rootView)
+        setupSubmitButton(rootView)
     }
-}
 
-fun form(config: Form.() -> Unit) = Form().apply(config)
+    private fun setupSubmitButton(rootView: View) {
+        submitButton?.let { button ->
+            val view = rootView.findViewById<View>(button.id)
+            view.setOnClickListener {
+                validate()
+                showErrors()
+            }
+            button.setupView(view)
+        }
+    }
+
+    private fun setupInputFields(rootView: View) {
+        inputFields.onEach {
+            it.setupView(rootView.findViewById(it.id), showErrors)
+        }
+    }
+
+}
 
 fun Fragment.form(config: Form.() -> Unit): Form {
     val form = Form().apply(config)
     viewLifecycleOwnerLiveData.observe(this) { lifecycleOwner ->
         lifecycleOwner.lifecycleScope.launchWhenCreated {
             form.apply {
-                initViews(requireView())
+                setupViews(requireView())
                 validate()
             }
         }
